@@ -14,8 +14,14 @@ import {
   resetCart,
 } from "@/redux/shopperSlice";
 import warning from "../public/assets/images/warning.webp";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const CartPage = () => {
+
+  const { data: session } = useSession();
+  const stripePromise = loadStripe(process.env.stripe_public_key)
   const dispatch = useDispatch();
   const productData = useSelector((state: any) => state.shopper.productData);
   const userInfo = useSelector((state: any) => state.shopper.userInfo);
@@ -39,9 +45,20 @@ const CartPage = () => {
     setTotalAmt(amt);
   }, [productData]);
 
-  const handleCheckout = () => {
-    console.log('done');
-  }
+  const handleCheckout = async() => {
+    const stripe = await stripePromise;
+
+    //Create a checkout session
+    const checkoutSession = await axios.post("api/create-checkout-session",{
+        items: productData,
+        email: session?.user?.email
+    });
+    // Redirecting user/customer to Stripe Checkout
+    const result: any = await stripe?.redirectToCheckout({
+        sessionId:checkoutSession.data.id,
+    })
+    if(result?.error) alert(result?.error.message)
+  };
 
   return (
     <div className="w-full py-10">
