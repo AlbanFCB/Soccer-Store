@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "../public/assets/images/logoSoccer.jpg";
 import { IoSearchOutline } from "react-icons/io5";
@@ -6,8 +6,22 @@ import { AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
 import { BsCart2 } from "react-icons/bs";
 import NavbarBottom from "./NavbarBottom";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const productData = useSelector((state: any) => state.shopper.productData);
+  //console.log(productData);
+  const [totalAmt, setTotalAmt] = useState("");
+
+  useEffect(() => {
+    let price = 0;
+    productData.map((item: any) => {
+      price += item.price * item.quantity;
+      return price;
+    });
+    setTotalAmt(price.toFixed(2));
+  }, [productData]);
+
   return (
     <div className="w-full bg-blue text-white sticky top-0 z-50">
       <div className="w-full h-full border-b-[1px] border-b-white">
@@ -71,9 +85,9 @@ const Navbar = () => {
           <Link href="/cart">
             <div className="flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 relative">
               <BsCart2 className="text-2xl" />
-              <p className="text-[10px] -mt-2">$0.00</p>
+              <p className="text-[10px] -mt-2">${totalAmt}</p>
               <span className="absolute w-4 h-4 bg-yellow text-black top-0 right-4 rounded-full flex items-center justify-center font-bodyFont text-xs">
-                0
+                {productData.length > 0 ? productData.length : 0}
               </span>
             </div>
           </Link>

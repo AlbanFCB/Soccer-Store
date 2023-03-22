@@ -2,8 +2,11 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { BsStarFill, BsInfoCircle } from "react-icons/bs";
+import { useDispatch } from 'react-redux';
+import { addToCart } from "@/redux/shopperSlice";
 
 const ProductDetails = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   //console.log(router)
   const [product, setProduct] = useState<any>({});
@@ -16,6 +19,7 @@ const ProductDetails = () => {
   }, []);
 
   //console.log(product)
+  const _id = Number(product._id)
 
   return (
     <div className="w-full bg-white">
@@ -81,7 +85,20 @@ const ProductDetails = () => {
             </div>
             {/* Add To Cart */}
             <div className="border-b-[1px] border-b-zinc-300 pb-4">
-              <button className="w-32 h-10 bg-blue text-white rounded-gull hover:bg-[#004f9a] duration-300">
+              <button 
+              className="w-32 h-10 bg-blue text-white rounded-gull hover:bg-[#004f9a] duration-300"
+              onClick={() => dispatch(addToCart({
+                _id: _id,
+                title: product.title,
+                description: product.description,
+                price: product.price,
+                oldPrice: product.oldPrice,
+                brand: product.brand,
+                category: product.category,
+                image: product.image,
+                quantity: 1,
+              }))}
+              >
                 Add to cart
               </button>
             </div>
