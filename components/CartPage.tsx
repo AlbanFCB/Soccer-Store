@@ -18,6 +18,7 @@ import warning from "../public/assets/images/warning.webp";
 const CartPage = () => {
   const dispatch = useDispatch();
   const productData = useSelector((state: any) => state.shopper.productData);
+  const userInfo = useSelector((state: any) => state.shopper.userInfo);
   const [warningMsg, setWarningMsg] = useState(false);
   const [totalOldPrice, setTotalOldPrice] = useState(0);
   const [totalSavings, setTotalSavings] = useState(0);
@@ -37,6 +38,10 @@ const CartPage = () => {
     setTotalSavings(savings);
     setTotalAmt(amt);
   }, [productData]);
+
+  const handleCheckout = () => {
+    console.log('done');
+  }
 
   return (
     <div className="w-full py-10">
@@ -181,12 +186,24 @@ const CartPage = () => {
 
         <div className="w-1/3 p-4 mt-24 h-[500px] border-[1px] border-zinc-400 rounded-md flex flex-col justify-center gap-4">
           <div className="w-full flex flex-col gap-4 border-b-[1px] border-b-zinc-200 pb-4">
-            <button className="bg-blue hover:bg-hoverBg w-full text-white h-10 rounded font-semibold duration-300">
-              Continue to checkout
-            </button>
-            <p className="text-sm text-center text-red-500 -mt-4 font-semibold">
-              Please sign in to checkout
-            </p>
+            {userInfo ? (
+              <button 
+              className="bg-blue hover:bg-hoverBg w-full text-white h-10 rounded font-semibold duration-300"
+              onClick={handleCheckout}
+              >
+                Continue to checkout
+              </button>
+            ) : (
+              <button className="bg-blue bg-opacity-50 cursor-not-allowed w-full text-white h-10 rounded font-semibold duration-300">
+                Continue to checkout
+              </button>
+            )}
+
+            {!userInfo && (
+              <p className="text-sm text-center text-red-500 -mt-4 font-semibold">
+                Please sign in to checkout
+              </p>
+            )}
             {warningMsg && (
               <div className="bg-[#002d58] text-white p-2 rounded-lg flex items-center justify-between gap-4">
                 <Image className="w-8" src={warning} alt="" />
