@@ -26,6 +26,16 @@ export const shopperslice = createSlice({
         state.productData.push(action.payload);
       }
     },
+
+    plusQuantity: (state, action) => {
+        const item = state.productData.find(
+            (item: StoreProduct) => item._id === action.payload._id
+        );
+        if (item) {
+            item!.quantity++;
+        }
+    },
+
     minusQuantity: (state, action) => {
       const item = state.productData.find(
         (item: StoreProduct) => item._id === action.payload._id
@@ -47,5 +57,5 @@ export const shopperslice = createSlice({
   },
 });
 
-export const { addToCart, minusQuantity, deleteItem, resetCart} = shopperslice.actions;
+export const { addToCart, minusQuantity, plusQuantity, deleteItem, resetCart} = shopperslice.actions;
 export default shopperslice.reducer;

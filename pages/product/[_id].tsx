@@ -4,6 +4,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { BsStarFill, BsInfoCircle } from "react-icons/bs";
 import { useDispatch } from 'react-redux';
 import { addToCart } from "@/redux/shopperSlice";
+import toast, { Toaster } from 'react-hot-toast';
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -97,7 +98,9 @@ const ProductDetails = () => {
                 category: product.category,
                 image: product.image,
                 quantity: 1,
-              }))}
+              })
+              )&& toast.success(`${product.title.substring(0,20)} is added to cart!`)
+            }
               >
                 Add to cart
               </button>
@@ -105,6 +108,17 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+      <Toaster
+        reverseOrder={false}
+        position="top-center"
+        toastOptions={{
+          style: {
+            borderRadius: "8px",
+            background: "#333",
+            color: "#fff"
+          },
+        }}
+      />
     </div>
   );
 };
