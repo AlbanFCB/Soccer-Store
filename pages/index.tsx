@@ -33,7 +33,7 @@ export default function Home({ productData }: Props) {
 // =================== SSR data fetching start here ===================================
 export const getServerSideProps = async () => {
   const productData = await (
-    await fetch(`${process.env.NEXTAYTH_URL}/api/productData`)
+    await fetch(`${process.env.NEXTAUTH_URL}/api/productData`)
   ).json();
 
   return {
