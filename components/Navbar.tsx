@@ -8,16 +8,25 @@ import NavbarBottom from "./NavbarBottom";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { addUser, removeUser } from "@/redux/shopperSlice";
+import {
+  ShopperState,
+  addUser,
+  removeUser,
+  setFilteredProducts,
+  setSearchQuery,
+} from "@/redux/shopperSlice";
+import { Item } from "@/type";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
-  console.log(session);
   const productData = useSelector((state: any) => state.shopper.productData);
-  //console.log(productData);
   const userInfo = useSelector((state: any) => state.shopper.userInfo);
   const [totalAmt, setTotalAmt] = useState("");
+
+  const shopperState = useSelector(
+    (state: { shopper: ShopperState }) => state.shopper
+  );
 
   useEffect(() => {
     if (session) {
@@ -75,28 +84,19 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="h-10 flex flex-1 relative">
-            <input
-              className="h-full w-full rounded-full px-4 text-black text-base outline-none border-[1px] border-transparent focus-visible:border-black duration-200"
-              type="text"
-              placeholder="Search items"
-            />
-            <span className="absolute w-8 h-8 rounded-full flex items-center justify-center top-1 right-1 bg-yellow text-black text-xl">
-              <IoSearchOutline />
-            </span>
-          </div>
-
-          <div className="navBarHover">
-            <AiOutlineHeart />
-            <div>
-              <p className="text-xs">Recorder</p>
-              <h2 className="text-base font-semibold mt-1">My Items</h2>
+          <Link href="/favorites">
+            <div className="navBarHover">
+              <AiOutlineHeart />
+              <div>
+                <p className="text-xs">Recorder</p>
+                <h2 className="text-base font-semibold mt-1">My Items</h2>
+              </div>
             </div>
-          </div>
+          </Link>
 
           {userInfo ? (
             <div className="navBarHover" onClick={() => signOut()}>
-              <Image 
+              <Image
                 className="w-10 rounded-full object-cover"
                 width={500}
                 height={500}
@@ -105,7 +105,9 @@ const Navbar = () => {
               />
               <div>
                 <p className="text-xs">Sign Out</p>
-                <h2 className="text-base font-semibold mt-1">{userInfo.name}</h2>
+                <h2 className="text-base font-semibold mt-1">
+                  {userInfo.name}
+                </h2>
               </div>
             </div>
           ) : (

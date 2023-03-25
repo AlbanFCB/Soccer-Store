@@ -34,6 +34,18 @@ export interface StoreProduct {
   category: string;
 }
 
+export interface FavoriteProduct {
+  _id: number;
+  title: string;
+  description: string;
+  oldPrice: number;
+  price: number;
+  brand: string;
+  image: string;
+  category: string;
+  isFavorite: boolean;
+}
+
 export interface UserInfo{
   _id: string;
   name: string;

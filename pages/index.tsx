@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Navbar from "./../components/Navbar";
 import Banner from "./../components/Banner";
-import { Product } from "../type";
+import { Item, Product } from "../type";
 import Products from "./../components/Products";
-import Footer from "./../components/Footer";
-import TopFooter from './../components/TopFooter';
+import SearchBar from '../components/SearchBar';
+
 
 interface Props {
   productData: Product;
@@ -12,6 +12,7 @@ interface Props {
 
 export default function Home({ productData }: Props) {
   //console.log(productData);
+
   return (
     <>
       <Head>
@@ -22,7 +23,8 @@ export default function Home({ productData }: Props) {
       </Head>
       <main className="bg-lightBlue">
         <div className="max-w-contentContainer mx-auto bg-white">
-          <Banner />
+          <Banner/>
+          <SearchBar productData={productData}/>
           <Products productData={productData} />
         </div>
       </main>

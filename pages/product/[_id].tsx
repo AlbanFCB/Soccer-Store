@@ -2,14 +2,17 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { BsStarFill, BsInfoCircle } from "react-icons/bs";
-import { useDispatch } from 'react-redux';
-import { addToCart } from "@/redux/shopperSlice";
-import toast, { Toaster } from 'react-hot-toast';
+import { useDispatch } from "react-redux";
+import {
+  addToCart,
+  addToFavorites,
+  removeFromFavorites,
+} from "@/redux/shopperSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  //console.log(router)
   const [product, setProduct] = useState<any>({});
   const [isLoading, setLoading] = useState(false);
 
@@ -19,8 +22,7 @@ const ProductDetails = () => {
     setLoading(false);
   }, []);
 
-  //console.log(product)
-  const _id = Number(product._id)
+  const _id = Number(product._id);
 
   return (
     <div className="w-full bg-white">
@@ -46,7 +48,39 @@ const ProductDetails = () => {
                   Rollback
                 </button>
               </div>
-              <IoMdHeartEmpty className="text-gray-600 text-2xl" />
+              <IoMdHeartEmpty
+                className={`text-6xl cursor-pointer ${
+                  !product.isFavorite ? "text-red-500" : ""
+                }`}
+                onClick={() => {
+                  if (!product.isFavorite) {
+                    dispatch(
+                      addToFavorites({
+                        _id: _id,
+                        title: product.title,
+                        description: product.description,
+                        price: product.price,
+                        oldPrice: product.oldPrice,
+                        brand: product.brand,
+                        category: product.category,
+                        image: product.image,
+                        isFavorite: true, // Set isFavorite to true when adding to favorites
+                      })
+                    );
+                    toast.success(
+                      `${product.title.substring(0, 20)} is added to favorite!`
+                    );
+                  } else {
+                    dispatch(removeFromFavorites(_id));
+                    toast.success(
+                      `${product.title.substring(
+                        0,
+                        20
+                      )} is removed from favorite!`
+                    );
+                  }
+                }}
+              />
             </div>
             {/* Product Info */}
             <div className="flex flex-col gap-1">
@@ -86,21 +120,26 @@ const ProductDetails = () => {
             </div>
             {/* Add To Cart */}
             <div className="border-b-[1px] border-b-zinc-300 pb-4">
-              <button 
-              className="w-32 h-10 bg-blue text-white rounded-gull hover:bg-[#004f9a] duration-300"
-              onClick={() => dispatch(addToCart({
-                _id: _id,
-                title: product.title,
-                description: product.description,
-                price: product.price,
-                oldPrice: product.oldPrice,
-                brand: product.brand,
-                category: product.category,
-                image: product.image,
-                quantity: 1,
-              })
-              )&& toast.success(`${product.title.substring(0,20)} is added to cart!`)
-            }
+              <button
+                className="w-32 h-10 bg-blue text-white rounded-gull hover:bg-[#004f9a] duration-300"
+                onClick={() =>
+                  dispatch(
+                    addToCart({
+                      _id: _id,
+                      title: product.title,
+                      description: product.description,
+                      price: product.price,
+                      oldPrice: product.oldPrice,
+                      brand: product.brand,
+                      category: product.category,
+                      image: product.image,
+                      quantity: 1,
+                    })
+                  ) &&
+                  toast.success(
+                    `${product.title.substring(0, 20)} is added to cart!`
+                  )
+                }
               >
                 Add to cart
               </button>
@@ -115,7 +154,7 @@ const ProductDetails = () => {
           style: {
             borderRadius: "8px",
             background: "#333",
-            color: "#fff"
+            color: "#fff",
           },
         }}
       />

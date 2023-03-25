@@ -11,6 +11,7 @@ type Data = {
         image: string;
         isNew: boolean;
         category: string;
+        isFavorite: boolean;
 }[];
 
 const productData = [
@@ -25,6 +26,7 @@ const productData = [
     image: "https://i.ibb.co/3vx76TN/image.png",
     isNew: true,
     category: "Maillots de football",
+    isFavorite: false,
     },
     
     {
@@ -38,6 +40,7 @@ const productData = [
     image: "https://i.ibb.co/xfQG70m/image.png",
     isNew: true,
     category: "Maillots de football",
+    isFavorite: false,
     },
     
     {
@@ -51,6 +54,7 @@ const productData = [
     image: "https://i.ibb.co/3yJZFcP/image.png",
     isNew: true,
     category: "Maillots de football",
+    isFavorite: false,
     },
     
     {
@@ -63,6 +67,7 @@ const productData = [
     image: "https://i.ibb.co/3C9nVZN/image.png",
     isNew: true,
     category: "Maillots de football",
+    isFavorite: false,
     },
 
   {
@@ -75,6 +80,7 @@ const productData = [
     image: "https://i.ibb.co/k8PHHZr/image.png",
     isNew: false,
     category: "Football clothing",
+    isFavorite: false,
   },
 
   {
@@ -87,6 +93,7 @@ const productData = [
     image: "https://i.ibb.co/WBHPzD3/image.png",
     isNew: false,
     category: "Football shoes",
+    isFavorite: false,
   },
   {
     _id: 107,
@@ -98,6 +105,7 @@ const productData = [
     image: "https://i.ibb.co/jV2GWMq/image.png",
     isNew: true,
     category: "Football shoes",
+    isFavorite: false,
   },
   {
     _id: 108,
@@ -109,6 +117,7 @@ const productData = [
     image: "https://i.ibb.co/KKRQGzm/image.png",
     isNew: false,
     category: "Football shoes",
+    isFavorite: false,
   },
   {
     _id: 109,
@@ -120,6 +129,7 @@ const productData = [
     image: "https://i.ibb.co/6XK9ykN/image.png",
     isNew: false,
     category: "Football jerseys",
+    isFavorite: false,
   },
   {
     _id: 110,
@@ -131,6 +141,7 @@ const productData = [
     image: "https://i.ibb.co/sVXjKZd/image.png",
     isNew: true,
     category: "Football shoes",
+    isFavorite: false,
   },
   
   {
@@ -143,6 +154,7 @@ const productData = [
     image: "https://i.ibb.co/hB4qvhh/image.png",
     isNew: false,
     category: "Football balls",
+    isFavorite: false,
   },
   
   {
@@ -155,6 +167,7 @@ const productData = [
     image: "https://i.ibb.co/k11xNWG/image.png",
     isNew: false,
     category: "Football clothing",
+    isFavorite: false,
   },
   
   {
@@ -167,6 +180,7 @@ const productData = [
     image: "https://i.ibb.co/HtXj5yN/image.png",
     isNew: true,
     category: "Football shoes",
+    isFavorite: false,
   },
   
   {
@@ -179,6 +193,7 @@ const productData = [
     image: "https://i.ibb.co/c1J4B88/image.png",
     isNew: false,
     category: "Football accessories",
+    isFavorite: false,
   },
   
   {
@@ -191,6 +206,7 @@ const productData = [
     image: "https://i.ibb.co/8srP6XS/image.png",
     isNew: false,
     category: "Football clothing",
+    isFavorite: false,
   },
 
   {
@@ -203,6 +219,7 @@ const productData = [
     image: "https://i.ibb.co/FgbNKPr/image.png",
     isNew: false,
     category: "Football clothing",
+    isFavorite: false,
   },
 ];
 

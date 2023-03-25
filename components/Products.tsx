@@ -5,16 +5,25 @@ import { GoPlus } from "react-icons/go";
 import { BsStarFill } from "react-icons/bs";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/shopperSlice";
+import { ShopperState, addToCart } from "@/redux/shopperSlice";
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from "react-redux";
 
 const Products = ({ productData }: any) => {
 
+  //console.log(productData)
+
+  const { filteredProducts, searchQuery } = useSelector(
+    (state: { shopper: ShopperState }) => state.shopper
+  );
+
   const dispatch = useDispatch()
+
+  const productsToDisplay = searchQuery === "" ? productData : filteredProducts;
 
   return (
     <div className="py-6 px-4 grid grid-cols-4 gap-4">
-      {productData?.map((item: Item) => (
+      {productsToDisplay?.map((item: Item) => (
         <div key={item._id} className="border-[1px] border-gray-200 mb-6 group">
           <div className="w-full h-[350px] overflow-hidden p-1">
             <Image

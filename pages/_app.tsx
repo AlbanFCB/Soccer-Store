@@ -8,6 +8,8 @@ import { store, persistor } from "../redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { SessionProvider } from "next-auth/react";
 
+
+
 const open_sans = Open_Sans({
   subsets: ["latin"],
   variable: "--font-open_sans",
