@@ -80,7 +80,10 @@ const Navbar = () => {
           </Link>
 
           {userInfo ? (
-            <div className="navBarHover" onClick={() => signOut()}>
+            <div
+              className="hidden lg:flex navBarHover"
+              onClick={() => signOut()}
+            >
               <Image
                 className="w-10 rounded-full object-cover"
                 width={500}
@@ -96,7 +99,10 @@ const Navbar = () => {
               </div>
             </div>
           ) : (
-            <div className="navBarHover" onClick={() => signIn()}>
+            <div
+              className="hidden lg:flex navBarHover"
+              onClick={() => signIn()}
+            >
               <AiOutlineUser className="text-lg" />
               <div>
                 <p className="text-xs">Sign In</p>
@@ -109,8 +115,8 @@ const Navbar = () => {
             <div className="hidden lg:flex">
               <div className="flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 relative">
                 <BsCart2 className="text-2xl" />
-                <p className="text-[10px] -mt-2">${totalAmt}</p>
-                <span className="absolute w-4 h-4 bg-yellow text-black top-0 right-4 rounded-full flex items-center justify-center font-bodyFont text-xs">
+                <p className="text-sm -mt-2 font-semibold">${totalAmt}</p>
+                <span className="absolute w-4 h-4 font-semibold bg-yellow text-black top-0 right-4 rounded-full flex items-center justify-center font-bodyFont text-xs">
                   {productData.length > 0 ? productData.length : 0}
                 </span>
               </div>
@@ -119,7 +125,7 @@ const Navbar = () => {
 
           <div className="lg:hidden">
             <button
-              className="block text-3xl text-white hover:text-gray-900 focus:outline-none pr-6"
+              className="block text-3xl text-white hover:text-yellow focus:outline-none pr-6"
               onClick={handleToggleMenu}
             >
               {toggleMenu ? <AiOutlineClose /> : <GiHamburgerMenu />}
@@ -127,8 +133,8 @@ const Navbar = () => {
           </div>
 
           {toggleMenu && (
-            <div className="absolute left-0 top-24 w-full bg-black py-5">
-              <div className="navBarHover">
+            <div className="absolute left-0 top-20 w-full bg-blue py-4">
+              <div className="navBarHover mb-2 flex items-center justify-center hover:font-bold">
                 <div className="w-4 grid grid-cols-2 gap-[2px]">
                   <span className="w-1.5 h-1.5 rounded-md border-[1px] border-white inline-flex"></span>
                   <span className="w-1.5 h-1.5 rounded-md border-[1px] border-white inline-flex"></span>
@@ -138,27 +144,57 @@ const Navbar = () => {
                 <p className="text-base font-semibold">My Orders</p>
               </div>
               <Link href="/favorites">
-                <div className="navBarHover">
-                  <AiOutlineHeart className="text-2xl"/>
+                <div className="navBarHover mb-2 flex items-center justify-center hover:font-bold">
+                  <AiOutlineHeart className="text-2xl" />
                   <div>
                     <p className="text-xs">Recorder</p>
                     <h2 className="text-base font-semibold mt-1">My Items</h2>
                   </div>
                 </div>
               </Link>
+              {userInfo ? (
+                <div
+                  className="navBarHover mb-2 flex items-center justify-center hover:font-bold"
+                  onClick={() => signOut()}
+                >
+                  <Image
+                    className="w-10 rounded-full object-cover"
+                    width={500}
+                    height={500}
+                    src={userInfo.image}
+                    alt=""
+                  />
+                  <div>
+                    <p className="text-xs">Sign Out</p>
+                    <h2 className="text-base font-semibold mt-1">
+                      {userInfo.name}
+                    </h2>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="navBarHover mb-2 flex items-center justify-center hover:font-bold"
+                  onClick={() => signIn()}
+                >
+                  <AiOutlineUser className="text-2xl" />
+                  <div>
+                    <p className="text-xs">Sign In</p>
+                    <h2 className="text-base font-semibold mt-1">Account</h2>
+                  </div>
+                </div>
+              )}
               <Link href="/cart">
-                <div className="flex">
-                <div className="flex justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 relative">
-                  <BsCart2 className="text-2xl" />
-                  <p className="text-[10px] -mt-2">${totalAmt}</p>
-                  <span className="absolute w-4 h-4 bg-yellow text-black top-1 left-8 rounded-full flex items-center justify-center font-bodyFont text-xs">
-                    {productData.length > 0 ? productData.length : 0}
-                  </span>
-                  <p className="">My Cart</p>
+                <div className="flex items-center justify-center navBarHover duration-300 hover:font-bold">
+                  <div className="flex justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent relative">
+                    <BsCart2 className="text-2xl" />
+
+                    <span className="absolute w-4 h-4 bg-yellow text-black top-1 left-8 rounded-full flex items-center justify-center font-bodyFont text-xs">
+                      {productData.length > 0 ? productData.length : 0}
+                    </span>
+                    <p className="">My Cart</p>
+                    <p className="text-sm font-semibold">${totalAmt}</p>
+                  </div>
                 </div>
-                </div>
-                
-                
               </Link>
             </div>
           )}

@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const NavbarBottom = () => {
   return (
-    <div className="max-w-container mx-auto py-2 px-6 flex items-center justify-between">
+    <div className="hidden max-w-container mx-auto py-2 px-6 lg:flex items-center justify-between">
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Image className="w-6" src={phoneImg} alt="phoneImg" />
@@ -24,13 +24,11 @@ const NavbarBottom = () => {
         </div>
       </div>
       <ul className="flex gap-6 text-sm font-semibold">
-        <li className="bottomNavLi">Deals</li>
-        <li className="bottomNavLi">Deals</li>
-        <li className="bottomNavLi">Deals</li>
-        <li className="bottomNavLi">Deals</li>
-        <li className="bottomNavLi">Deals</li>
-        <li className="bottomNavLi">Deals</li>
-        <li className="bottomNavLi">Deals</li>
+        <li className="bottomNavLi">France</li>
+        <li className="bottomNavLi">Allemagne</li>
+        <li className="bottomNavLi">Espagne</li>
+        <li className="bottomNavLi">Angleterre</li>
+        <li className="bottomNavLi">Italie</li>
       </ul>
     </div>
   );
