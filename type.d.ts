@@ -32,6 +32,7 @@ export interface StoreProduct {
   image: string;
   quantity: number;
   category: string;
+  isNew: boolean;
 }
 
 export interface FavoriteProduct {

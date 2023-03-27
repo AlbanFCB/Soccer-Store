@@ -9,6 +9,7 @@ import {
 import { Item } from "@/type";
 
 const SearchBar = ({ productData }: any) => {
+
   const dispatch = useDispatch();
   const shopperState = useSelector(
     (state: { shopper: ShopperState }) => state.shopper

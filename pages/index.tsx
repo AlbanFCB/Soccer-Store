@@ -24,7 +24,6 @@ export default function Home({ productData }: Props) {
       <main className="bg-lightBlue">
         <div className="max-w-contentContainer mx-auto bg-white">
           <Banner/>
-          <SearchBar productData={productData}/>
           <Products productData={productData} />
         </div>
       </main>

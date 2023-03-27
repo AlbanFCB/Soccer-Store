@@ -9,15 +9,13 @@ import { ShopperState, addToCart } from "@/redux/shopperSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
+import SearchBar from "./SearchBar";
 
 const Products = ({ productData }: any) => {
-  const { filteredProducts, searchQuery } = useSelector(
-    (state: { shopper: ShopperState }) => state.shopper
-  );
-
+  const { filteredProducts } = useSelector((state: { shopper: ShopperState }) => state.shopper);
   const dispatch = useDispatch();
 
-  const productsToDisplay = searchQuery === "" ? productData : filteredProducts;
+  const productsToDisplay = filteredProducts.length === 0 ? productData : filteredProducts;
 
   const [pageNumber, setPageNumber] = useState(0);
   const itemsPerPage = 12;
@@ -34,6 +32,7 @@ const Products = ({ productData }: any) => {
 
   return (
     <div>
+      <SearchBar productData={productData}/>
       <div className="py-6 px-4 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {displayProducts?.map((item: Item) => (
           <div
@@ -149,7 +148,7 @@ const Products = ({ productData }: any) => {
         onPageChange={handlePageClick}
         containerClassName={"pagination"}
         previousLinkClassName={"pagination__link mr-3 hover:font-semibold"}
-        nextLinkClassName={"pagination__link ml-3 hover:font-semibold"}
+        nextLinkClassName={"pagination__link ml-3 hover:underline"}
         disabledClassName={"pagination__link--disabled"}
         activeClassName={"pagination__link--active"}
         pageClassName="mx-3 hover:font-semibold"
