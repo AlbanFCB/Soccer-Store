@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "../public/assets/images/logoSoccer.jpg";
-import { IoSearchOutline } from "react-icons/io5";
 import { AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
 import { BsCart2 } from "react-icons/bs";
 import NavbarBottom from "./NavbarBottom";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession, signIn, signOut } from "next-auth/react";
-import {
-  ShopperState,
-  addUser,
-  removeUser,
-  setFilteredProducts,
-  setSearchQuery,
-} from "@/redux/shopperSlice";
-import { Item } from "@/type";
+import { addUser, removeUser } from "@/redux/shopperSlice";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { AiOutlineClose } from "react-icons/ai";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -23,10 +17,11 @@ const Navbar = () => {
   const productData = useSelector((state: any) => state.shopper.productData);
   const userInfo = useSelector((state: any) => state.shopper.userInfo);
   const [totalAmt, setTotalAmt] = useState("");
+  const [toggleMenu, setToggleMenu] = useState(false);
 
-  const shopperState = useSelector(
-    (state: { shopper: ShopperState }) => state.shopper
-  );
+  const handleToggleMenu = () => {
+    setToggleMenu(!toggleMenu);
+  };
 
   useEffect(() => {
     if (session) {
@@ -62,17 +57,7 @@ const Navbar = () => {
             </div>
           </Link>
 
-          <div className="navBarHover">
-            <div className="w-4 grid grid-cols-2 gap-[2px]">
-              <span className="w-1.5 h-1.5 border-[1px] border-white inline-flex"></span>
-              <span className="w-1.5 h-1.5 border-[1px] border-white inline-flex"></span>
-              <span className="w-1.5 h-1.5 border-[1px] border-white inline-flex"></span>
-              <span className="w-1.5 h-1.5 border-[1px] border-white inline-flex"></span>
-            </div>
-            <p className="text-base font-semibold">Departments</p>
-          </div>
-
-          <div>
+          <div className="hidden lg:flex">
             <div className="navBarHover">
               <div className="w-4 grid grid-cols-2 gap-[2px]">
                 <span className="w-1.5 h-1.5 rounded-md border-[1px] border-white inline-flex"></span>
@@ -80,12 +65,12 @@ const Navbar = () => {
                 <span className="w-1.5 h-1.5 rounded-md border-[1px] border-white inline-flex"></span>
                 <span className="w-1.5 h-1.5 rounded-md border-[1px] border-white inline-flex"></span>
               </div>
-              <p className="text-base font-semibold">Services</p>
+              <p className="text-base font-semibold">My Orders</p>
             </div>
           </div>
 
           <Link href="/favorites">
-            <div className="navBarHover">
+            <div className="hidden navBarHover lg:flex">
               <AiOutlineHeart />
               <div>
                 <p className="text-xs">Recorder</p>
@@ -121,14 +106,62 @@ const Navbar = () => {
           )}
 
           <Link href="/cart">
-            <div className="flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 relative">
-              <BsCart2 className="text-2xl" />
-              <p className="text-[10px] -mt-2">${totalAmt}</p>
-              <span className="absolute w-4 h-4 bg-yellow text-black top-0 right-4 rounded-full flex items-center justify-center font-bodyFont text-xs">
-                {productData.length > 0 ? productData.length : 0}
-              </span>
+            <div className="hidden lg:flex">
+              <div className="flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 relative">
+                <BsCart2 className="text-2xl" />
+                <p className="text-[10px] -mt-2">${totalAmt}</p>
+                <span className="absolute w-4 h-4 bg-yellow text-black top-0 right-4 rounded-full flex items-center justify-center font-bodyFont text-xs">
+                  {productData.length > 0 ? productData.length : 0}
+                </span>
+              </div>
             </div>
           </Link>
+
+          <div className="lg:hidden">
+            <button
+              className="block text-3xl text-white hover:text-gray-900 focus:outline-none pr-6"
+              onClick={handleToggleMenu}
+            >
+              {toggleMenu ? <AiOutlineClose /> : <GiHamburgerMenu />}
+            </button>
+          </div>
+
+          {toggleMenu && (
+            <div className="absolute left-0 top-24 w-full bg-black py-5">
+              <div className="navBarHover">
+                <div className="w-4 grid grid-cols-2 gap-[2px]">
+                  <span className="w-1.5 h-1.5 rounded-md border-[1px] border-white inline-flex"></span>
+                  <span className="w-1.5 h-1.5 rounded-md border-[1px] border-white inline-flex"></span>
+                  <span className="w-1.5 h-1.5 rounded-md border-[1px] border-white inline-flex"></span>
+                  <span className="w-1.5 h-1.5 rounded-md border-[1px] border-white inline-flex"></span>
+                </div>
+                <p className="text-base font-semibold">My Orders</p>
+              </div>
+              <Link href="/favorites">
+                <div className="navBarHover">
+                  <AiOutlineHeart className="text-2xl"/>
+                  <div>
+                    <p className="text-xs">Recorder</p>
+                    <h2 className="text-base font-semibold mt-1">My Items</h2>
+                  </div>
+                </div>
+              </Link>
+              <Link href="/cart">
+                <div className="flex">
+                <div className="flex justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 relative">
+                  <BsCart2 className="text-2xl" />
+                  <p className="text-[10px] -mt-2">${totalAmt}</p>
+                  <span className="absolute w-4 h-4 bg-yellow text-black top-1 left-8 rounded-full flex items-center justify-center font-bodyFont text-xs">
+                    {productData.length > 0 ? productData.length : 0}
+                  </span>
+                  <p className="">My Cart</p>
+                </div>
+                </div>
+                
+                
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 

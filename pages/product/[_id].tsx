@@ -26,19 +26,19 @@ const ProductDetails = () => {
 
   return (
     <div className="w-full bg-white">
-      <div className="max-w-contentContainer mx-auto flex items-center py-4">
-        <div className="w-2/3 h-full flex items-center justify-center overflow-hidden relative">
+      <div className=" block max-w-contentContainer mx-auto lg:flex items-center py-4">
+        <div className="w-full lg:w-2/3 h-full flex items-center justify-center overflow-hidden relative">
           <img
             src={product.image}
             alt=""
             className="w-[80%] transform-origin-top-left cursor-move duration-500"
           />
         </div>
-        <div className="w-1/3 h-full flex flex-col gap-2">
-          <p className="p-2 text-[#004f9a] text-sm font-semibold border border-gray-400 ounrded-md">
+        <div className="w-full lg:w-1/3 h-full flex flex-col gap-2">
+          <p className="m-4 lg:m-0 p-2 text-[#004f9a] text-sm font-semibold border border-gray-400 ounrded-md">
             500+ bought since yesterday
           </p>
-          <div className="px-2 py-4 border border-gray-400 rounded-md flex flex-col gap-6">
+          <div className="m-4 lg:m-0 px-2 py-4 border border-gray-400 rounded-md flex flex-col gap-6">
             <div className="flex justify-between items-center">
               <div className="flex gap-2">
                 <button className="px-2 py-[1px] text-[#004f9a] text-sm border-[1px] border-[#004f9a] rounded-sm">
