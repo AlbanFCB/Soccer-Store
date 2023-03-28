@@ -19,9 +19,8 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 
 const CartPage = () => {
-
   const { data: session } = useSession();
-  const stripePromise = loadStripe(process.env.stripe_public_key)
+  const stripePromise = loadStripe(process.env.stripe_public_key);
   const dispatch = useDispatch();
   const productData = useSelector((state: any) => state.shopper.productData);
   const userInfo = useSelector((state: any) => state.shopper.userInfo);
@@ -45,25 +44,25 @@ const CartPage = () => {
     setTotalAmt(amt);
   }, [productData]);
 
-  const handleCheckout = async() => {
+  const handleCheckout = async () => {
     const stripe = await stripePromise;
 
     //Create a checkout session
-    const checkoutSession = await axios.post("api/create-checkout-session",{
-        items: productData,
-        email: session?.user?.email
+    const checkoutSession = await axios.post("api/create-checkout-session", {
+      items: productData,
+      email: session?.user?.email,
     });
     // Redirecting user/customer to Stripe Checkout
     const result: any = await stripe?.redirectToCheckout({
-        sessionId:checkoutSession.data.id,
-    })
-    if(result?.error) alert(result?.error.message)
+      sessionId: checkoutSession.data.id,
+    });
+    if (result?.error) alert(result?.error.message);
   };
 
   return (
     <div className="w-full py-10">
-      <div className="w-full flex gap-10">
-        <div className="w-2/3 flex flex-col gap-5">
+      <div className="p-4 block w-full lg:p-0 lg:flex gap-10">
+        <div className="w-full lg:w-2/3 flex flex-col gap-5">
           <h1 className="text-2xl font-bold text-black">
             Cart{" "}
             <span className="text-lightText font-normal">
@@ -89,16 +88,18 @@ const CartPage = () => {
               {productData.map((item: StoreProduct) => (
                 <div
                   key={item._id}
-                  className="flex items-center justify-between gap-4 border-b-[1px] border-b-zinc-200 pb-4"
+                  className="block justify-center md:flex items-center md:justify-between gap-4 border-b-[1px] border-b-zinc-200 pb-4"
                 >
-                  <div className="w-3/4 flex items-center gap-2">
-                    <Image
-                      className="w-32"
-                      width={500}
-                      height={500}
-                      src={item.image}
-                      alt=""
-                    />
+                  <div className="block mx-auto my-4 w-full md:w-3/4 md:flex md:items-center gap-2">
+                    <div className="w-3/5 md:w-auto mx-auto">
+                      <Image
+                        className="w-full my-4"
+                        width={500}
+                        height={500}
+                        src={item.image}
+                        alt=""
+                      />
+                    </div>
                     <div>
                       <h2 className="text-base text-zinc-900">{item.title}</h2>
                       <p className="text-sm text-zinc-500">
@@ -166,7 +167,7 @@ const CartPage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="w-1/4 text-right flex flex-col items-end gap-1">
+                  <div className="w-full pt-4 items-center md:w-1/4 text-right flex md:flex-col md:items-end gap-1">
                     <p className="font-semibold text-xl text-[#2a8703]">
                       <FormatePrice amount={item.price * item.quantity} />
                     </p>
@@ -201,12 +202,12 @@ const CartPage = () => {
           </div>
         </div>
 
-        <div className="w-1/3 p-4 mt-24 h-[500px] border-[1px] border-zinc-400 rounded-md flex flex-col justify-center gap-4">
+        <div className="w-full lg:w-1/3 p-4 mt-16 h-[500px] border-[1px] border-zinc-400 rounded-md flex flex-col justify-center gap-4">
           <div className="w-full flex flex-col gap-4 border-b-[1px] border-b-zinc-200 pb-4">
             {userInfo ? (
-              <button 
-              className="bg-blue hover:bg-hoverBg w-full text-white h-10 rounded font-semibold duration-300"
-              onClick={handleCheckout}
+              <button
+                className="bg-blue hover:bg-hoverBg w-full text-white h-10 rounded font-semibold duration-300"
+                onClick={handleCheckout}
               >
                 Continue to checkout
               </button>

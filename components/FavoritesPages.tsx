@@ -13,20 +13,22 @@ const FavoritesPages = () => {
       (product: any) => product._id !== null
     )
   );
-  console.log(favoriteProduct);
 
   return (
     <div>
+      <h1 className="font-bold text-2xl text-center my-12">
+        My Favorites Products 💛
+      </h1>
       {favoriteProduct?.map((favoris: FavoriteProduct, index: number) => (
         <div
-          className="flex items-center justify-between gap-4 border-b-[1px] border-b-zinc-200 pb-4"
+          className="block lg:flex items-center justify-between gap-4 border-b-[1px] border-b-zinc-200 p-4 my-8"
           key={favoris._id ?? index}
         >
-          <img className="w-32" src={favoris.image} alt="" />
-          <h1>{favoris.title}</h1>
-          <p>{favoris.description}</p>
+          <img className="w-32 mx-auto" src={favoris.image} alt="" />
+          <h1 className="font-semibold text-center my-6">{favoris.title}</h1>
+          <p className="text-center lg:text-left mb-6">{favoris.description}</p>
           <button
-            className="text-sm underline underline-offset-2 decoration-[1px] text-zinc-600 hover:no-underline hover:text-blue duration-300"
+            className="block mx-auto lg:mx-0 bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center"
             onClick={() =>
               dispatch(removeFavoritesInPage({ _id: favoris._id }))
             }
